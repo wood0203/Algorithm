@@ -1,0 +1,80 @@
+import sys
+
+def num_restrict(x,a,b):
+    # 수의 범위를 제한시켜주는 함수
+    if x<a or x>b:
+        sys.exit()
+
+n, m = map(int,input().split())
+num_restrict(n,4,500)
+num_restrict(m,4,500)
+paper = [list(map(int,sys.stdin.readline().split())) for _ in range(n)]
+
+def rectangle(a,b):
+    result = 0
+    if 0 <= a <= n-2 and 0 <= b <= m-2:
+        result = paper[a][b] + paper[a+1][b] + paper[a][b+1] + paper[a+1][b+1]
+    return result
+
+def stick(a,b):
+    result1 = result2 = 0
+    for x in range(4):
+        if 0 <= a+3 <= n-1: result1 += paper[a+x][b]
+        if 0 <= b+3 <= m-1: result2 += paper[a][b+x]
+    return max(result1,result2)
+            
+
+def L_shape(a,b):
+    result1 = result2 = result3 = result4 = 0
+    if 0 <= a <= n-3 and 0 <= b <= m-2:          # L
+        result1 = paper[a][b] + paper[a+1][b] + paper[a+2][b] + paper[a+2][b+1]
+    if 1 <= a <= n-1 and 0 <= b <= m-3:
+        result2 = paper[a][b] + paper[a][b+1] + paper[a][b+2] + paper[a-1][b+2]
+    if 0 <= a <= n-3 and 0 <= b <= m-2:
+        result3 = paper[a][b] + paper[a][b+1] + paper[a+1][b+1] + paper[a+2][b+1]
+    if 0 <= a <= n-2 and 0 <= b <= m-3:
+        result4 = paper[a][b] + paper[a+1][b] + paper[a][b+1] + paper[a][b+2]
+    return max(result1,result2,result3,result4)
+
+def reverse_L(a,b):
+    result1 = result2 = result3 = result4 = 0
+    if 2 <= a <= n-1 and 0 <= b <= m-2:
+        result1 = paper[a][b] + paper[a][b+1] + paper[a-1][b+1] + paper[a-2][b+1]
+    if 0 <= a <= n-2 and 0 <= b <= m-3:
+        result2 = paper[a][b] + paper[a][b+1] + paper[a][b+2] + paper[a+1][b+2]
+    if 0 <= a <= n-3 and 0 <= b <= m-2:
+        result3 = paper[a][b] + paper[a+1][b] + paper[a+2][b] + paper[a][b+1]
+    if 0 <= a <= n-2 and 0 <= b <= m-3:
+        result4 = paper[a][b] + paper[a+1][b] + paper[a+1][b+1] + paper[a+1][b+2]
+    return max(result1,result2,result3,result4)
+
+def chair(a,b):
+    result1 = result2 = result3 = result4 = 0
+    if 0 <= a <= n-3 and 0 <= b <= m-2:
+        result1 = paper[a][b] + paper[a+1][b] + paper[a+1][b+1] + paper[a+2][b+1]
+    if 1 <= a <= n-1 and 0 <= b <= m-3:
+        result2 = paper[a][b] + paper[a][b+1] + paper[a-1][b+1] + paper[a-1][b+2]
+    if 2 <= a <= n-1 and 0 <= b <= m-2:
+        result3 = paper[a][b] + paper[a-1][b] + paper[a-1][b+1] + paper[a-2][b+1]
+    if 0 <= a <= n-2 and 0 <= b <= m-3:
+        result4 = paper[a][b] + paper[a][b+1] + paper[a+1][b+1] + paper[a+1][b+2]
+    return max(result1,result2,result3,result4)
+
+def t_shape(a,b):
+    result1 = result2 = result3 = result4 = 0
+    if 0 <= a <= n-2 and 0 <= b <= m-3: # ㅜ
+        result1 = paper[a][b] + paper[a][b+1] + paper[a][b+2] + paper[a+1][b+1]
+    if 1 <= a <= n-2 and 0 <= b <= m-2: # ㅏ
+        result2 = paper[a-1][b] + paper[a][b] + paper[a+1][b] + paper[a][b+1]
+    if 0 <= a <= n-2 and 1 <= b <= m-2: # ㅗ
+        result3 = paper[a][b] + paper[a+1][b-1] + paper[a+1][b] + paper[a+1][b+1]    
+    if 1 <= a <= n-2 and 0 <= b <= m-2: # ㅓ
+        result4 = paper[a][b] + paper[a-1][b+1] + paper[a][b+1] + paper[a+1][b+1]
+    return max(result1,result2,result3,result4)
+
+answer = 0
+for i in range(n):
+    for j in range(m):
+        result = max(rectangle(i,j), L_shape(i,j), reverse_L(i,j), chair(i,j), t_shape(i,j), stick(i,j))
+        answer = max(result, answer)
+print(answer)
