@@ -1,22 +1,23 @@
 import Foundation
 
-let nm = readLine()!.components(separatedBy: " ").map({Int($0)!})
+let nm = readLine()!.split(separator: " ").map({Int($0)!})
 let (n,m) = (nm[0], nm[1])
-var num_lst:[[Int]] = Array(repeating: [], count: n+1)
-var d:[[Int]] = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
-for i in 1...n {
-    num_lst[i] = [0] + (readLine()!.components(separatedBy: " ").map({Int($0)!}))
+var arr:[[Int]] = []
+var prefix_sum = Array(repeating: Array(repeating: 0, count: n+1), count: n+1)
+for i in 0..<n {
+    var temp = readLine()!.split(separator: " ").map({Int($0)!})
+    arr.append(temp)
 }
 
-for i in 1...n {
-    for j in 1...n {
-        d[i][j] = num_lst[i][j] + d[i-1][j] + d[i][j-1] - d[i-1][j-1]
+for i in 1..<n+1 {
+    for j in 1..<n+1 {
+        prefix_sum[i][j] = arr[i-1][j-1] + prefix_sum[i-1][j] + prefix_sum[i][j-1] - prefix_sum[i-1][j-1]
     }
 }
 
-// 100만
-for _ in 0..<m {
-    let xy = readLine()!.components(separatedBy: " ").map({Int($0)!})
-    var x1 = xy[0]; var y1 = xy[1]; var x2 = xy[2]; var y2 = xy[3]
-    print(d[x2][y2] - d[x2][y1-1] - d[x1-1][y2] + d[x1-1][y1-1])
+for j in 0..<m {
+    let xy = readLine()!.split(separator: " ").map({Int($0)!})
+    let (x1,y1,x2,y2) = (xy[0],xy[1],xy[2],xy[3])
+    var answer = prefix_sum[x2][y2] - prefix_sum[x2][y1-1] - prefix_sum[x1-1][y2] + prefix_sum[x1-1][y1-1]
+    print(answer)
 }
