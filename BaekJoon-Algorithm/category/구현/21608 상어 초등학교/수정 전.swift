@@ -12,6 +12,7 @@ for _ in 0..<n*n {
     keys.append(student.removeFirst())
     students[keys[keys.count-1]] = student
 }
+
 tables[1][1] = keys[0]
 
 for i in 1..<keys.count {
@@ -39,7 +40,69 @@ for i in 0..<n {
     }
 }
 
+//for pos in temp {
+//    var count = 0
+//    let xx = pos[1]
+//    let yy = pos[2]
+//    for i in 0..<4 {
+//        let dx = xx + move_x[i]
+//        let dy = yy + move_y[i]
+//        if 0 <= dx && dx < n && 0 <= dy && dy < n {
+//            if tables[dx][dy] == 0 {
+//                count += 1
+//            }
+//        }
+//    }
+//    tt.append([count, xx, yy])
+//}
+
+//for chair in emptyChairs {
+//    var count = 0
+//    let x = chair[0]
+//    let y = chair[1]
+//    for i in 0..<4 {
+//        let dx = x + move_x[i]
+//        let dy = y + move_y[i]
+//        if 0 <= dx && dx < n && 0 <= dy && dy < n {
+//            if favorites.contains(tables[dx][dy]) {
+//                count += 1
+//            }
+//        }
+//    }
+//    if 0 <= x && x < n && 0 <= y && y < n {
+//        positions.append([count, x, y])
+//    }
+//}
+
 print(answer)
+
+enum targetType {
+    case EmptySeats
+    case FavoriteFriends
+}
+
+func searchFourDimensions(in positions: [[Int]], target: targetType) -> [[Int]] {
+    var results:[[Int]] = []
+    positions.forEach {
+        var count = 0
+        let x = $0[0]
+        let y = $0[0]
+        (0..<4).forEach {
+            let dx = x + move_x[$0]
+            let dy = x + move_y[$0]
+            if 0 <= dx && dx < n && 0 <= dy && dy < n {
+                switch target {
+                case .EmptySeats:
+                    let favorites = students[student]
+                case .FavoriteFriends:
+                    <#code#>
+                }
+            }
+        }
+    }
+    
+    return results
+}
 
 func checkFavorites(_ student: Int) -> [Int] {
     var positions:[[Int]] = []
