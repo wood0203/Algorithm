@@ -48,8 +48,7 @@ func Combination<T: Comparable>(_ array:[T], _ n:Int) -> [[T]]{
 // 탈출가능한 내부함수를 따로 선언해준다.
 // Combination과 Permutation의 큰 차이는 첫 완전탐색시 처음부터 탐색하는지, 직전보다 큰 값을 보는지.
 // Permutation과 combination 만드는 연습. 백트래킹 + 재귀
-// 코딩테스트에 자주 나오므로 연습 필수!
-
+// 코딩테스트에 자주 나오므로 연습 필수!!!!!
 
 // 초안은 class로 만드려 했지만, 함수로 만드는게 더 적합하다고 판단.
 //class Combination {
